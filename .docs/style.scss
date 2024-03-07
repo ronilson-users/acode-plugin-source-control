@@ -1,0 +1,229 @@
+.sidebar-control {
+* { box-sizing: border-box; }
+padding: 0;
+margin-top: 7px ;
+margin-bottom: 5px;
+width: 100%;
+border-radius: 5px;
+border: 1px solid #2c343c;
+background-color: #3b3d41cd;
+
+.flex-container {
+display: flex;
+align-items: center;
+}
+
+/* Estilos CSS */
+.menu {
+background-color: rebeccapurple;
+width:100%;
+
+span {
+border: 1px solid black; /* Apenas para visualização dos spans */
+padding: 5px;
+}
+
+}
+
+button{
+color: #fff;
+cursor: pointer;
+border: none;
+border-radius: 2px;
+}
+
+button.branch-button {
+width: auto;
+position: absolute;
+bottom: 10px;
+left: 40px;
+background-color: #007bff;
+padding: 8px 16px;
+transform: rotate(-90deg);
+transform-origin: bottom left;
+white-space: nowrap;
+}
+
+button.branch-button:hover {
+background-color: #0056b3;
+}
+
+button.commit-button {
+background-color: #5f5b57cd;
+padding: 8px 10px;
+width: 100%;
+margin: 5px;
+
+}
+
+button.commit-button:hover {
+background-color: #999;
+}
+
+button.action-button {
+background-color: #9996;
+padding: 2px ;
+position: relative;
+float: right;
+font-size: 10px;
+text-align: center;
+display: inline;
+width: 35px;
+}
+
+button.action-button:hover {
+background-color: #999;
+}
+
+.sub-title {
+/* margin-left: 5px; */
+text-align: start;
+padding: 10px ;
+font-size: 1rem;
+background-color: #2c2e31cd;
+color: #fff;
+/* width: 100%; */
+cursor: pointer;
+}
+
+.changed-title {
+/* margin-left: 5px; */
+text-align: start;
+padding: 10px ;
+font-size: 1rem;
+background-color: #2c2e31cd;
+color: #fff;
+/* width: 100%; */
+cursor: pointer;
+}
+
+.toggle{
+width: 30px;
+padding: 5px;
+border: 1px solid #fff;
+cursor: pointer;
+font-size: 1rem;
+left:0 ;
+float: left;
+}
+.staged-title {
+/* margin-left: 5px; */
+text-align: start;
+padding: 10px ;
+font-size: 1rem;
+background-color: #2c2e31cd;
+color: #fff;
+/* width: 100%; */
+cursor: pointer;
+}
+
+.title {
+text-align: start;
+padding: 10px 0;
+font-size: 1rem;
+}
+
+.control-area {
+padding: 0;
+margin: 0 ;
+width: 95%;
+border: 1px solid #cecece;
+
+.scroll {
+padding: 0;
+font-size: 0.9rem;
+
+.text {
+padding-left: 8px;
+}
+
+.hidden {
+display: none;
+}
+}
+}
+
+ul {
+list-style-type: none;
+padding: 5px;
+}
+.list{
+border: 1px solid #fff;
+}
+/* li::before { */
+/* content: '●'; */
+/* margin-right: 5px; */
+/* font-size: 1rem; */
+/* vertical-align: middle; */
+/* color: gray; */
+/* display: none; */
+/* } */
+
+.changed::before {
+color: rgba(75,241,86,0.6);
+}
+
+.added::before {
+color: rgba(66,207,248,0.9);
+}
+
+.deleted::before {
+color: rgba(248,66,66,0.5);
+}
+
+.align-right {
+float: right;
+}
+
+.list-item-content {
+display: inline-block;
+vertical-align: middle;
+margin-right: 5px;
+}
+
+.action-button:focus {
+outline: none;
+}
+
+.action-M{
+margin-right: 10px;
+float: right;
+color: rgba(204,151,16,0.91);
+font-size: 7px;
+display: inline;
+position: relative;
+padding: 2px;
+}
+
+.action-U{
+margin-right: 10px;
+float: right;
+color: rgba(75,241,86,0.6);
+font-size: 7px;
+display: inline;
+position: relative;
+padding: 2px;
+}
+
+.action-A{
+margin-right: 10px;
+float: right;
+color: rgba(66,207,248,0.9);
+font-size: 7px;
+display: inline;
+position: relative;
+padding: 2px;
+}
+
+.border-top {
+border-top: 1px solid #2c343c;
+}
+
+.file-icon {
+display: inline;
+position: relative;
+align-items: right;
+margin-left: 2px;
+margin-right: 5px;
+}
+}
