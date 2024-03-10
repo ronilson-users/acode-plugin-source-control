@@ -131,34 +131,24 @@ this.$sourceControlArea = tag('div', {
 className: 'container control-area'
 });
 
-
-
 //cria o menu CHANGES
 const $menuChanges = tag('div', {
 className: 'menu-changes'
 });
-
 // toggle do menu
 const $toggleMenuC = tag('span', {
 className: 'menu-toggle', textContent: '>'
 });
-
 const $Changes = tag('span', {
 className: 'menu-text', textContent: 'CHANGES'
 });
-
 const $contFileC = tag('span', {
 className: 'menu-cont', textContent: '1'
 });
-
-
 const $btnAll = tag('span', {
 className: 'menu-btn-all ', textContent: '...'
 });
-
-
 $menuChanges.append($toggleMenuC, $Changes, $contFileC, $btnAll);
-
 
 // Insere o menu CHANGES na Source Área
 this.$sourceControlArea.append($menuChanges);
@@ -177,23 +167,17 @@ className: 'menu-toggle', textContent: '>'
 const $StagedChanges = tag('span', {
 className: 'menu-text', textContent: 'STAGED CHANGES'
 });
-
 const $contFileSC = tag('span', {
 className: 'menu-cont', textContent: '1'
 });
-
 const $btnAllSC = tag('span', {
 className: 'menu-btn-all ', textContent: '...'
 });
-
 $menuStagedChanges.append($toggleMenuSC, $StagedChanges, $contFileSC, $btnAllSC);
-
-
 
 const $list = tag('ul', {
 className: 'list'
 });
-
 
 // Create list element for staged changes
 const StagedFiles = [{
@@ -215,7 +199,6 @@ filename: '.env'
 filename: 'App.ts'
 },
 ];
-
 const createListItem = (file, type) => {
 const $listItem = tag('li', {
 className: type
@@ -243,12 +226,10 @@ const $action = tag('span', {
 textContent: 'M'
 });
 $action.classList.add('action-M');
-
 $icon.classList.add('list-item-content');
 $filename.classList.add('list-item-content');
 $addButton.classList.add('list-item-content', 'align-right');
 $action.classList.add('list-item-content', 'align-right');
-
 $listItem.append($icon, $filename, $addButton, $action);
 
 return $listItem;
@@ -258,36 +239,22 @@ StagedFiles .forEach(file => {
 const $listItem = createListItem(file, 'changed');
 $list.append($listItem);
 });
-
 const $deletedItem = createListItem({
 filename: 'deletedFile.js'
 }, 'deleted');
 $deletedItem.classList.add('border-top');
-
 const $addedItem = createListItem({
 filename: 'addedFile.js'
 }, 'added');
 $addedItem.classList.add('border-top');
-
 $list.prepend($deletedItem, $addedItem);
-
-
 // Insere o menu STAGED na Source Área
 this.$sourceControlArea.append($menuStagedChanges);
-
 //Insere a lista STAGED na Source Área
 this.$sourceControlArea.append($list);
 
 
 
-
-
-
-
-this.$containerControl.append($header, this.$sourceControlArea);
-sidebarApps.add('detect-icon', 'detect-sidebar-app', 'Detect', (app) => {
-app.append(this.$containerControl);
-});
 
 
 this.$containerControl.append($header, this.$sourceControlArea);

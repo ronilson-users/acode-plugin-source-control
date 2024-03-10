@@ -1,135 +1,254 @@
-import '@fortawesome/fontawesome-free/css/all.css';
-
 import plugin from '../plugin.json';
 import style from './style.scss';
-import {logger} from './logger.js'
+import logger from './logger.js'
+
 const sidebarApps = acode.require('sidebarApps');
 
 class SourceControl {
-constructor(){
-this.editor = editorManager.editor;
-}
 
-async init() {
-try {
-acode.addIcon('detect-icon', this.baseUrl + 'assets/icon.png');
-this.globalStyles();
-this.container();
-} catch (error) {
-console.error('Erro ao inicializar o plugin de controle de origem:', error);
-}
-}
+ constructor() {
+  this.editor = editorManager.editor;
+  this.active();
 
-/*
- Style global
- */
+ }
 
-globalStyles() {
-this.$style = tag('style', { textContent: style, id: 'source-control' });
-document.head.append(this.$style);
-}
+ async active() {
+  const activeFile = editorManager.activeFile;
+  const file = activeFile.uri;
+  console.log('Active file: ', file);
 
+  const fileList = acode.require('fileList');
+  const list = await fileList();
 
+  list.forEach(item => {
+   console.log('File name:', item.name, 'File path:', item.path);
+   // Verifique aqui se o diretório .git existe
+   // Tome a decisão adequada com base nessa verificação
+   if (item.name === '.git') {
+    // Executar alguma ação se o diretório .git existir
+    console.log('.git directory exists');
+   }
+  });
+ }
 
-/*
-    container
- */
+ async init() {
+  try {
+   acode.addIcon('detect-icon', this.baseUrl + 'assets/icon.png');
+   this.globalStyles();
 
-container() {
-this.$containerControl = tag('div', { className: 'container sidebar-control' });
+   this.sidebarContainerControl();
+  } catch (error) {
+   console.error('Erro ao inicializar o plugin de controle de origem:', error);
+  }
+ }
 
-const $header = tag('div', { className: 'header-sc' });
-const $title = tag('span', { className: 'title-h', textContent: 'SOURCE CONTROL' });
+ globalStyles() {
+  this.$style = tag('style', {
+   textContent: style, id: 'source-control'
+  });
+  document.head.append(this.$style);
+ }
 
-const $initilizeRepo = tag('button', {
-className: 'button-init-repo', textContent: 'INITIALIZE REPOSITORY'
-});
-
-
-
-
-$header.append($title, $initilizeRepo);
-
-
-
-// Criação do menu
-const $menucontrol = document.createElement('div');
-$menucontrol.className = 'menu-bar';
-
-const $buttonIcon = tag('button', {
-  className: 'icon-button fas fa-plus-circle'
-});
+ sidebarContainerControl() {
 
 
-$buttonIcon.addEventListener('click', () => {
-window.toast('Botão personalizado clicado', 4000);
-// Adicione aqui o código para a ação do botão personalizado
-});
 
-$menucontrol.appendChild($buttonIcon); // Adicionando o botão ao menu
+  // Create container for sidebar control
+  this.$containerControl = tag('div', {
+   className: 'container sidebar-control'
+  });
 
-// Adicionar o menu ao control-area
-this.$sourceControlArea = tag('div', { className: 'control-area' });
-this.$sourceControlArea.appendChild($menucontrol);
-// Criar um botão dentro da control-area
-const $customButton = document.createElement('button');
-$customButton.textContent = 'Custom Button';
-$customButton.addEventListener('click', () => {
-window.toast('Botão personalizado clicado', 4000);
-// Adicione aqui o código para a ação do botão personalizado
-});
-this.$sourceControlArea.appendChild($customButton);
+  // Create header element
+  const $header = tag('div', {
+   className: 'header-sc'
+  });
 
-let currentBranch = 'main';
-const $branchButton = tag('button', { textContent: `Branch: ${currentBranch}`, id: 'branchButton' });
-$branchButton.classList.add('branch-button');
-$branchButton.addEventListener('click', async () => {
-const multiPrompt = acode.require('multiPrompt');
+  // Criar o elemento do ícone de detecção com a classe detect-icon
+  const $detectIcon = tag('div', {
+   className: 'detect-icon detect-sidebar-app '
+  });
 
-const inputs = [
-{ type: 'text', id: 'branchName', placeholder: 'Nome da Branch' },
-{ type: 'text', id: 'commitMessage', placeholder: 'Mensagem do Commit' }
-];
+  // Criar o elemento de notificações dentro do ícone de detecção
+  const $notifications = tag('div', {
+   className: 'notifications',
+   textContent: '1' // Altere isso conforme necessário
+  });
 
-try {
-const promptResult = await multiPrompt('Criar Nova Branch', inputs);
-const newBranchName = promptResult['newBranchName'];
-$branchButton.textContent = `Branch: ${newBranchName}`;
+  // Adicionar o elemento de notificações ao ícone de detecção
+  $detectIcon.appendChild($notifications);
 
-const branchName = promptResult['branchName'];
-const commitMessage = promptResult['commitMessage'];
+  // Obter as coordenadas do ícone de detecção
+  const detectIconRect = $detectIcon.getBoundingClientRect();
 
-console.log('Nova Branch:', branchName);
-console.log('Mensagem do Commit:', commitMessage);
-} catch (error) {
-console.error('Erro ao exibir o multiPrompt:', error);
-}
-});
+  // Posicionar o ícone de notificações dentro do ícone de detecção
+  $notifications.style.left = detectIconRect.left + 'px';
 
-this.$sourceControlArea.append($branchButton);
+  $notifications.style.top = (detectIconRect.top + detectIconRect.height + 8) + 'px'; // Posicione o ícone de notificações 10 pixels abaixo do ícone de detecção
 
-this.$containerControl.append($header, this.$sourceControlArea);
+  // Adicionar o ícone de detecção ao documento ou a outro elemento pai
+  document.body.appendChild($detectIcon); // Adapte isso conforme necessário
 
-sidebarApps.add('detect-icon', 'detect-sidebar-app', 'Detect', (app) => {
-app.append(this.$containerControl);
-});
-}
 
-async destroy() {
-this.$containerControl.remove()
-}
+
+
+
+
+  // Title for the source control
+  const $title = tag('span', {
+   className: 'title', textContent: 'SOURCE CONTROL'
+  });
+
+  const fileList = acode.require('fileList');
+
+  const $initilizeRepo = tag('button', {
+   className: 'button-init-repo', textContent: 'INITIALIZE REPOSITORY'
+  });
+
+
+
+  // Input field for committing changes
+  const $inputCommit = tag('input', {
+   className: 'commit-input',
+   placeholder: 'First Commit..'
+  });
+
+  // Button for committing changes
+  const $buttonCommit = tag('button', {
+   className: 'commit-button ', textContent: 'Commit'
+  });
+  $buttonCommit.addEventListener('click', () => {
+   const inputText = $inputCommit.value;
+   console.log('Texto capturado:', inputText);
+  });
+
+
+  // Append title, input, and button to the header
+  $header.append($title, $inputCommit, $buttonCommit, $initilizeRepo, $detectIcon);
+
+  // Create container for control area
+  this.$sourceControlArea = tag('div', {
+   className: 'container control-area'
+  });
+
+// Crie os elementos
+const $box = document.createElement('div');
+$box.classList.add('box');
+
+const $row = document.createElement('div');
+$row.classList.add('row');
+
+// Criar o elemento do ícone SVG
+const $iconSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+$iconSVG.setAttribute("width", "24");
+$iconSVG.setAttribute("height", "24");
+$iconSVG.setAttribute("viewBox", "0 0 24 24");
+$iconSVG.setAttribute("fill", "none");
+$iconSVG.innerHTML = `
+  <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
+  <path d="M8 12L16 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11 9L8.08704 11.913V11.913C8.03897 11.961 8.03897 12.039 8.08704 12.087V12.087L11 15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+`;
+
+const $iconFile = document.createElement('div');
+$iconFile.classList.add('icon-file');
+$iconFile.textContent = '>';
+$iconFile.appendChild($iconSVG); // Adicione o elemento do ícone SVG como filho de $iconFile
+
+const $titleFilename = document.createElement('span');
+$titleFilename.classList.add('title-filename', 'title');
+$titleFilename.textContent = 'Título';
+
+const $pathFilename = document.createElement('span');
+$pathFilename.classList.add('row', 'path-filename', 'sub-title');
+$pathFilename.textContent = 'path/file.js';
+
+const $btnAdd = document.createElement('div');
+$btnAdd.classList.add('icon', 'btn-Add'); // Alteração aqui
+$btnAdd.textContent = 'Btn';
+
+const $btnView = document.createElement('div');
+$btnView.classList.add('btn-view');
+$btnView.textContent = 'View';
+
+// Adicione os elementos como filhos uns dos outros
+$row.appendChild($iconFile);
+$row.appendChild($titleFilename);
+$titleFilename.appendChild($pathFilename);
+$row.appendChild($btnAdd);
+$row.appendChild($btnView);
+
+$box.appendChild($row);
+
+// Criar a nova div dentro da .box
+const $newDiv = document.createElement('div');
+$newDiv.classList.add('new-div');
+$newDiv.textContent = 'View';
+$box.appendChild($newDiv);
+
+// Adicione a box à área de controle de origem
+this.$sourceControlArea.appendChild($box);
+
+
+
+
+
+  // cria o menu CHANGES
+  const $menuChanges = tag('div', {
+   className: 'menu-control'
+  });
+  const $toggleMenuC = tag('span', {
+   className: 'menu-toggle', textContent: '>'
+  });
+  $toggleMenuC.addEventListener('click', () => {
+   $toggleMenuC.classList.toggle('active');
+  });
+  const $Changes = tag('span', {
+   className: 'menu-text', textContent: 'CHANGES'
+  });
+  const $contFileC = tag('span', {
+   className: 'icon menu-cont', textContent: '1'
+  });
+  const $btnAll = tag('button', {
+   className: 'menu-btn-all', textContent: 'All'
+  });
+  $menuChanges.append($toggleMenuC, $Changes, $contFileC, $btnAll);
+
+  // Insere o menu CHANGES na Source Área
+  this.$sourceControlArea.append($menuChanges);
+
+
+
+
+
+
+
+
+
+  this.$containerControl.append($header, this.$sourceControlArea);
+
+  sidebarApps.add('detect-icon', 'detect-sidebar-app', 'Detect', (app) => {
+   app.append(this.$containerControl);
+  });
+ }
+
+ async destroy() {
+  this.$containerControl.remove();
+ }
 }
 
 if (window.acode) {
-const acodePlugin = new SourceControl();
-acode.setPluginInit(plugin.id, async (baseUrl, $page, { cacheFileUrl, cacheFile }) => {
-if (!baseUrl.endsWith('/')) {
-baseUrl += '/';
-}
-acodePlugin.baseUrl = baseUrl;
-await acodePlugin.init($page, cacheFile, cacheFileUrl);
-});
-acode.setPluginUnmount(plugin.id, () => {
-acodePlugin.destroy();
-});
+ const acodePlugin = new SourceControl();
+ acode.setPluginInit(plugin.id, async (baseUrl, $page, {
+  cacheFileUrl, cacheFile
+ }) => {
+  if (!baseUrl.endsWith('/')) {
+   baseUrl += '/';
+  }
+  acodePlugin.baseUrl = baseUrl;
+  await acodePlugin.init($page, cacheFile, cacheFileUrl);
+ });
+ acode.setPluginUnmount(plugin.id,
+  () => {
+   acodePlugin.destroy();
+  });
 }

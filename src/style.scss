@@ -1,226 +1,424 @@
-/* Import de fonte */
+/* scss source controle */
+// Import de fonte
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap');
 
-/* Reset CSS */
-.sidebar-control {
-  * {
-    box-sizing: border-box;
-  }
-  
-  margin: 0;
-  padding: 0;
-  
-  font-family: "Nanum Gothic Coding",
-  monospace;
-
-  /* Fonte Nanum Gothic Coding */
-  .nanum-gothic {
-    font-family: "Nanum Gothic Coding", monospace;
-  }
-  
-  /* Estilos para a barra lateral
-#container,
-.sidebar-control {
-padding-top: 8px;
-display: flex;
-flex-direction: column;
-height: 100%;
-width: 100%;
-overflow: hidden;
+// Reset CSS
+#sidebar {
+ /* background-color: var(-primary-color); */
+ box-sizing: border-box;
+ color: var(-primary-text-color);
+ display: flex;
+ height: 100vh;
+ left: 0;
+ max-width: 350px;
+ overflow-x: hidden;
+ overflow-y: hidden;
+ position: fixed;
+ top: 0;
+ width: 950vh;
+ z-index: 109;
+ transform: 3ms;
 }
 
-*/
+.container {
+ /* border:1px solid #acb8c9; */
+ padding: 2px;
+ 
+}
+
+.sidebar-control {
+ * {
+  box-sizing: border-box;
+ }
+ 
+ margin: 0;
+ padding: 0;
+ height:100%;
+ width:100%;
+ 
+ font-family: "Nanum Gothic Coding",
+ monospace;
+ 
+ 
+ 
+ /* Estilos para o cabeçalho */
+ .header-sc {
+  border: 1px solid #acb8c9;
+  border-radius: 2px;
+  padding: 5px;
   
-  /* Estilos para o cabeçalho */
-  .header-sc {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
+ }
+ 
+ /* Estilos para a área de controle */
+ .control-area {
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid #acb8c9;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
+  /* display: none; */
+  
+  
+  /* Flexbox */
+  .box {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   border: 1px solid #000;
+   padding: 2px;
   }
   
-  /* Estilos para a área de controle */
-  .control-area {
-    background-color: rgba(121, 192, 255, 0.1);
-    border-radius: 5px;
-    border: 1px solid rgb(121, 192, 255);
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    margin-bottom: 7px;
-    /* display: none; */
-    
-    .scroll {
-      padding: 0;
-      font-size: 0.9rem;
-      
-    }
-    
-    .text {
-      padding-left: 8px;
-    }
-    
-    .sub-text {
-      padding: 6px 18px;
-      transition: color .3s;
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    .line {
-      border: 1px solid#999a9c;
-      width: 80px;
-    }
-    
+  .row {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
   }
   
-  .icon-button {
-  background-color: transparent; /* Definindo o fundo como transparente */
-  border: none; /* Removendo a borda */
+  .icon-file,
+  .btn-Add,
+  .btn-view {
+   border: 1px solid #000;
+   padding-top: 9px;
+   padding-left: 5px;
+   padding-bottom: 5px;
+   padding-right: 5px;
+   width: 45px;
+  }
+  
+  .btn-Add,
+  .btn-view {
+   width: 45px;
+  }
+  
+  .icon-file {
+   width: 25px;
+  }
+  
+  .title-filename {
+   
+   flex: 1;
+   border: 1px solid #000;
+   padding-left: 10px;
+   
+  }
+  
+  .title {
+   
+   font-size: 14px;
+  }
+  
+ .icon {
+ align-items: center;
+ background-repeat: no-repeat;
+ background-size: 24px;
+ border-bottom-left-radius: 50%;
+ border-bottom-right-radius: 50%;
+ border-top-left-radius: 50%;
+ border-top-right-radius: 50%;
+ display: flex;
+ justify-content: center;
+ text-decoration-line: none;
+ user-select: none;
+}
+  
+  .sub-title {
+   flex: 1;
+   font-weight: bold;
+   font-size: 8px;
+   padding-left: 10px;
+   color: #e79803c0;
+  }
+  
+  .path-filename {
+   font-size: 12px;
+  }
+  
+  .new-div{
+   flex: 1;
+   border: 1px solid #000;
+   
+  }
+  
+  .scroll {
+   padding: 0;
+   font-size: 0.9rem;
+  }
+  
+  .text {
+   padding-left: 8px;
+  }
+  
+  .sub-text {
+   padding: 6px 18px;
+   transition: color .3s;
+   font-size: 8x;
+  }
+  
+  .hidden {
+   display: none;
+  }
+  
+  .line {
+   border: 1px solid#999a9c;
+   width: 80px;
+  }
+ }
+ 
+ /* Estilos para o ícone */
+ .icon-button {
+  /*background-color: transparent; */
+  border: 1px solid lightseagreen;
   cursor: pointer;
-}
-
-.icon-button:hover {
-  color: #007bff; /* Alterando a cor quando hover */
-}
-
-.icon-button:focus {
-  outline: none; /* Removendo o contorno ao focar */
-}
-
-.icon-button .fas {
-  /* Estilos específicos para o ícone */
-  font-size: 20px; /* Ajuste conforme necessário */
-  color: #007bff; /* Cor do ícone */
-}
   
-  $loading-duration: 2s; // Duração da animação
   
-  .loading {
+  &:hover {
+   color: #007bff;
+  }
+  
+  &:focus {
+   outline: none;
+  }
+  
+  .fas {
+   font-size: 20px;
+   color: #007bff;
+  }
+ }
+ 
+ /* Estilo para Barra de Loading  */
+ $loading-duration: 2s;
+ 
+ .loading {
+  width: 100%;
+  height: 4px;
+  background-color: #eee;
+  position: relative;
+  
+  &::after {
+   content: '';
+   display: block;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 0;
+   height: 100%;
+   background-color: #007bff; // Cor da barra de progresso
+   animation: loadingAnimation $loading-duration linear infinite;
+  }
+  
+  @keyframes loadingAnimation {
+   0% {
+    width: 0;
+   }
+   
+   100% {
     width: 100%;
-    height: 4px; 
-    background-color: #eee; 
-    position: relative;
-    
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background-color: #007bff; // Cor da barra de progresso
-      animation: loadingAnimation $loading-duration linear infinite;
-    }
-    
-    @keyframes loadingAnimation {
-      0% {
-        width: 0;
-      }
-      
-      100% {
-        width: 100%;
-      }
-    }
+   }
+  }
+ }
+ 
+ /* Estilos para a barra de menu */
+ .menu-bar {
+  display: flex;
+  top: 20px;
+  width: 70%;
+  margin-left: 50px;
+ }
+ 
+ .menu-control {
+  background-color: #8a8684;
+  justify-content: space-between;
+  align-items: center;
+  
+  
+ }
+ 
+ .menu-toggle {
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bold;
+  width: 10%;
+  
+ }
+ 
+ .menu-toggle.active {
+  width: 10%;
+  transform: rotate(90deg);
+  transition-duration: 200ms;
+ }
+ 
+ .menu-text {
+  color: #fff;
+  width: 60%;
+  margin: 10px;
+ }
+ 
+ .menu-cont {
+  background-color: #faf9f8;
+  width: auto !important;
+  
+  padding: 3px;
+  color: #171513;
+  margin: 5px;
+ }
+ 
+ .menu-btn-all {
+  padding: 5px;
+  width: 10%;
+  
+ }
+ 
+ 
+ /* Estilos para o título */
+ .title-sc {
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+ }
+ 
+ /* Estilos para ícone de detecção e aplicativo */
+ .detect-icon,
+ .detect-sidebar-app {
+  cursor: pointer;
+  left: 25px;
+  position: absolute;
+ }
+ 
+ /* Estilos para ícone de notificações */
+ .notifications {
+  border: 1px solid;
+  border-radius: 25%;
+  padding: 3px;
+  background-color: dodgerblue;
+  left: -150px;
+  top: 200px;
+  position: relative;
+ }
+ 
+ .grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
+  grid-template-rows: auto auto;
+ }
+ 
+ .content {
+  border: 1px solid black;
+  padding: 10px;
+ }
+ 
+ /* Estilos para botões */
+ button {
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  padding: 10px;
+  margin: 5px;
+ }
+ 
+ .button-init-repo {
+  background-color: #007bff;
+  padding: 8px 16px;
+  letter-spacing: 1px;
+ }
+ 
+ button.branch-button {
+  width: auto;
+  position: absolute;
+  background-color: #007bff;
+  padding: 8px 16px;
+  transform: rotate(-90deg);
+  transform-origin: bottom left;
+  white-space: nowrap;
+  bottom: 8px;
+  left: 42px;
+ }
+ 
+ button.branch-button:hover {
+  background-color: #0056b3;
+ }
+ 
+ button.commit-button {
+  background-color: #007bff;
+  padding: 8px 10px;
+  width: 95%;
+  margin: 10px;
+ }
+ 
+ /* Estilos para botões de ação */
+ .action-button {
+  background-color: #243691df;
+  margin: 8px;
+  padding: 7px;
+  position: absolute;
+  font-size: 17px;
+  text-align: center;
+  display: inline-block;
+  
+  width: auto !important;
+  margin-right: 0 auto;
+  color: #fff;
+  
+  &:hover {
+   background-color: #2980b9;
   }
   
-  /* Estilos para a barra de menu */
-  .menu-bar {
-    display: flex;
-    top: 20px;
-    width: 70%;
-    margin-left: 50px;
+  &:active {
+   background-color: #1f618d;
   }
+ }
+ 
+ .staged-title {
+  background-color: #fff;
+ }
+ 
+ .changed-title {
+  background-color: #fff;
+ }
+ 
+ .listItem {
+  border: 1px solid #028407c0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+ }
+ 
+ /* Estilos para botões de ação */
+ .card-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  border-radius: 12px;
+  padding: 16px;
+  width: 90%;
+  max-width: 280px;
+  z-index: 110;
+  border: 1px solid var(--border-color);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4) 0px 0px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+  /* Opacidade do card */
   
-  /* Estilos para o título */
-  .title-h {
-    text-align: left;
-    font-size: 14px;
-    font-weight: bold;
-    color: #555;
+  .textarea {
+   width: 100%;
+   height: 150px;
+   /* Altura do textarea */
+   border: none;
+   background-color: transparent;
+   color: inherit;
+   resize: none;
+   outline: none;
+   padding: 8px;
+   margin-top: 10px;
+   border-radius: 8px;
+   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+   font-size: 14px;
+   font-family: inherit;
   }
-  
-  /* Estilos para ícone de detecção e aplicativo */
-  .detect-icon,
-  .detect-sidebar-app {
-    border-radius: 25px !important;
-    cursor: pointer;
-    left: 5px;
-    position: absolute;
-  }
-  
-  /* Estilos para ícone de notificações */
-  .notifications {
-    border: 1px solid;
-    border-radius: 25px;
-    background-color: dodgerblue;
-    left: -150px;
-    top: 200px;
-    position: relative;
-  }
-  
-  /* Estilos para botões */
-  button {
-    cursor: pointer;
-    border: none;
-    border-radius: 2px;
-    padding: 10px;
-    margin :5px;
-  }
-  
-  .button-init-repo{
-    background-color: #007bff;
-    padding: 8px 16px;
-    letter-spacing: 1px;
-  }
-  
-  button.branch-button {
-    width: auto;
-    position: absolute;
-    background-color: #007bff;
-    padding: 8px 16px;
-    transform: rotate(-90deg);
-    transform-origin: bottom left;
-    white-space: nowrap;
-    bottom: 8px;
-    left: 42px;
-  }
-  
-  button.branch-button:hover {
-    background-color: #0056b3;
-  }
-  
-  button.commit-button {
-    background-color: #007bff;
-    padding: 8px 10px;
-    width: 95%;
-    margin: 10px;
-  }
-  
-  button.commit-button:hover {
-    background-color: #3b90e7;
-  }
-  
-  /* Estilos para botões de ação */
-  .action-button {
-    background-color: #243691df;
-    margin: 3px;
-    padding: 5px;
-    position: relative;
-    font-size: 10px;
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-    color: #fff;
-  }
-  
-  button.action-button:hover {
-    background-color: #2980b9;
-  }
-  
-  button.action-button:active {
-    background-color: #1f618d;
-  }
+ }
 }
