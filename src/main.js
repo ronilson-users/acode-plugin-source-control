@@ -1,6 +1,6 @@
 import plugin from '../plugin.json';
 import style from './style.scss';
-import logger from './logger.js'
+import { logger } from './logger.js'
 
 const sidebarApps = acode.require('sidebarApps');
 
@@ -32,6 +32,8 @@ class SourceControl {
  }
 
  async init() {
+  
+  log("Este é um exemplo de mensagem de log.");
   try {
    acode.addIcon('detect-icon', this.baseUrl + 'assets/icon.png');
    this.globalStyles();
@@ -50,9 +52,6 @@ class SourceControl {
  }
 
  sidebarContainerControl() {
-
-
-
   // Create container for sidebar control
   this.$containerControl = tag('div', {
    className: 'container sidebar-control'
@@ -72,6 +71,11 @@ class SourceControl {
   const $notifications = tag('div', {
    className: 'notifications',
    textContent: '1' // Altere isso conforme necessário
+   
+   /* 
+   criar lógica pra identificar alterações no control-area 
+  */    
+  
   });
 
   // Adicionar o elemento de notificações ao ícone de detecção
@@ -81,18 +85,13 @@ class SourceControl {
   const detectIconRect = $detectIcon.getBoundingClientRect();
 
   // Posicionar o ícone de notificações dentro do ícone de detecção
-  $notifications.style.left = detectIconRect.left + 'px';
+  $notifications.style.left =  detectIconRect.left + 8 + 'px';
 
-  $notifications.style.top = (detectIconRect.top + detectIconRect.height + 8) + 'px'; // Posicione o ícone de notificações 10 pixels abaixo do ícone de detecção
+  $notifications.style.top = (detectIconRect.top + detectIconRect.height + 13) + 'px'; // Posicione o ícone de notificações 12,50 pixels abaixo do ícone de detecção
 
   // Adicionar o ícone de detecção ao documento ou a outro elemento pai
-  document.body.appendChild($detectIcon); // Adapte isso conforme necessário
-
-
-
-
-
-
+  document.body.appendChild($detectIcon); 
+  
   // Title for the source control
   const $title = tag('span', {
    className: 'title', textContent: 'SOURCE CONTROL'
@@ -118,7 +117,7 @@ class SourceControl {
   });
   $buttonCommit.addEventListener('click', () => {
    const inputText = $inputCommit.value;
-   console.log('Texto capturado:', inputText);
+   log('Texto capturado:', inputText);
   });
 
 
@@ -139,10 +138,10 @@ $row.classList.add('row');
 
 // Criar o elemento do ícone SVG
 const $iconSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-$iconSVG.setAttribute("width", "24");
-$iconSVG.setAttribute("height", "24");
-$iconSVG.setAttribute("viewBox", "0 0 24 24");
-$iconSVG.setAttribute("fill", "none");
+$iconSVG.setAttribute("width", "25");
+$iconSVG.setAttribute("height", "25");
+$iconSVG.setAttribute("viewBox", "0 0 12 24 ");
+$iconSVG.setAttribute("fill", "#08df17c0");
 $iconSVG.innerHTML = `
   <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
   <path d="M8 12L16 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -152,7 +151,7 @@ $iconSVG.innerHTML = `
 const $iconFile = document.createElement('div');
 $iconFile.classList.add('icon-file');
 $iconFile.textContent = '>';
-$iconFile.appendChild($iconSVG); // Adicione o elemento do ícone SVG como filho de $iconFile
+// Adicione o elemento do ícone SVG como filho de $iconFile
 
 const $titleFilename = document.createElement('span');
 $titleFilename.classList.add('title-filename', 'title');
@@ -163,8 +162,9 @@ $pathFilename.classList.add('row', 'path-filename', 'sub-title');
 $pathFilename.textContent = 'path/file.js';
 
 const $btnAdd = document.createElement('div');
-$btnAdd.classList.add('icon', 'btn-Add'); // Alteração aqui
-$btnAdd.textContent = 'Btn';
+$btnAdd.classList.add('btn-Add'); // Alteração aqui
+
+$btnAdd.appendChild($iconSVG); 
 
 const $btnView = document.createElement('div');
 $btnView.classList.add('btn-view');
@@ -181,8 +181,74 @@ $box.appendChild($row);
 
 // Criar a nova div dentro da .box
 const $newDiv = document.createElement('div');
-$newDiv.classList.add('new-div');
-$newDiv.textContent = 'View';
+
+$newDiv.classList.add('box');
+
+$row.classList.add('row');
+// listar files aqui 
+
+const $list = tag('ul', {
+className: 'list'
+});
+
+// Create list element for staged changes
+const StagedFiles = [{
+filename: 'file1.json',
+directory:'path/file.js '
+}
+];
+const createListItem = (file, type) => {
+const $listItem = tag('li', {
+className: type
+});
+const iconClass = acode.require('helpers').getIconForFile(file.filename);
+const $icon = tag('span', {
+className: `file-icon ${iconClass}`
+});
+const $filename = tag('span', {
+textContent: file.filename
+});
+
+
+const $addButton = tag('button', {
+className: 'action-button', textContent: '+'
+});
+
+$addButton.addEventListener('click', () => {
+window.toast('Click ️', 4000);
+$list.removeChild($listItem);
+
+const $stagedListItem = createListItem(file, 'staged');
+$stagedList.append($stagedListItem);
+});
+
+const $action = tag('span', {
+textContent: 'M'
+});
+$action.classList.add('action-M');
+$icon.classList.add('list-item-content');
+$filename.classList.add('list-item-content');
+$addButton.classList.add('list-item-content', 'align-right');
+$action.classList.add('list-item-content', 'align-right');
+$listItem.append($icon, $filename, $addButton, $action);
+
+return $listItem;
+};
+
+
+// Criar a lista de arquivos
+StagedFiles.forEach(file => {
+  const $listItem = createListItem(file, 'file-item');
+  $list.appendChild($listItem);
+});
+
+// Adicionar a lista à nova div
+$newDiv.appendChild($list);
+
+
+
+
+
 $box.appendChild($newDiv);
 
 // Adicione a box à área de controle de origem
@@ -206,7 +272,7 @@ this.$sourceControlArea.appendChild($box);
    className: 'menu-text', textContent: 'CHANGES'
   });
   const $contFileC = tag('span', {
-   className: 'icon menu-cont', textContent: '1'
+   className: 'menu-cont', textContent: '1'
   });
   const $btnAll = tag('button', {
    className: 'menu-btn-all', textContent: 'All'
@@ -215,15 +281,7 @@ this.$sourceControlArea.appendChild($box);
 
   // Insere o menu CHANGES na Source Área
   this.$sourceControlArea.append($menuChanges);
-
-
-
-
-
-
-
-
-
+  // Fim menuChanges 
   this.$containerControl.append($header, this.$sourceControlArea);
 
   sidebarApps.add('detect-icon', 'detect-sidebar-app', 'Detect', (app) => {

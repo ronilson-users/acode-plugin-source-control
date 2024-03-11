@@ -79,7 +79,7 @@
   .icon-file,
   .btn-Add,
   .btn-view {
-   border: 1px solid #000;
+   border: 1px solid #29fa37c0;
    padding-top: 9px;
    padding-left: 5px;
    padding-bottom: 5px;
@@ -87,11 +87,11 @@
    width: 45px;
   }
   
-  .btn-Add,
-  .btn-view {
-   width: 45px;
-  }
-  
+  /*   .btn-Add, */
+  /*   .btn-view { */
+  /*     */
+  /*   } */
+  /*    */
   .icon-file {
    width: 25px;
   }
@@ -109,19 +109,19 @@
    font-size: 14px;
   }
   
- .icon {
- align-items: center;
- background-repeat: no-repeat;
- background-size: 24px;
- border-bottom-left-radius: 50%;
- border-bottom-right-radius: 50%;
- border-top-left-radius: 50%;
- border-top-right-radius: 50%;
- display: flex;
- justify-content: center;
- text-decoration-line: none;
- user-select: none;
-}
+  /* .icon { */
+  /*  align-items: center; */
+  /*  background-repeat: no-repeat; */
+  /*  background-size: 24px; */
+  /*  border-bottom-left-radius: 50%; */
+  /*  border-bottom-right-radius: 50%; */
+  /*  border-top-left-radius: 50%; */
+  /*  border-top-right-radius: 50%; */
+  /*  display: flex; */
+  /*  justify-content: center; */
+  /*  text-decoration-line: none; */
+  /*  user-select: none; */
+  /* } */
   
   .sub-title {
    flex: 1;
@@ -135,11 +135,15 @@
    font-size: 12px;
   }
   
-  .new-div{
-   flex: 1;
+  .new-div {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
    border: 1px solid #000;
-   
+   padding: 2px;
   }
+  
+  
   
   .scroll {
    padding: 0;
@@ -166,26 +170,7 @@
   }
  }
  
- /* Estilos para o ícone */
- .icon-button {
-  /*background-color: transparent; */
-  border: 1px solid lightseagreen;
-  cursor: pointer;
-  
-  
-  &:hover {
-   color: #007bff;
-  }
-  
-  &:focus {
-   outline: none;
-  }
-  
-  .fas {
-   font-size: 20px;
-   color: #007bff;
-  }
- }
+ 
  
  /* Estilo para Barra de Loading  */
  $loading-duration: 2s;
@@ -318,7 +303,7 @@
   margin: 5px;
  }
  
- .button-init-repo {
+ button.button-init-repo {
   background-color: #007bff;
   padding: 8px 16px;
   letter-spacing: 1px;
@@ -366,14 +351,11 @@
   }
   
   &:active {
-   background-color: #1f618d;
+   background-color: #61b9f3;
   }
  }
  
- .staged-title {
-  background-color: #fff;
- }
- 
+ .staged-title,
  .changed-title {
   background-color: #fff;
  }
@@ -386,7 +368,7 @@
   padding: 0;
  }
  
- /* Estilos para botões de ação */
+ 
  .card-container {
   position: fixed;
   top: 50%;
