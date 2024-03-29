@@ -117,9 +117,7 @@ class SourceControl {
   });
   $buttonCommit.addEventListener('click', () => {
    const inputText = $inputCommit.value;
-   log('Texto capturado:', inputText);
-  });
-
+   
 
   // Append title, input, and button to the header
   $header.append($title, $inputCommit, $buttonCommit, $initilizeRepo, $detectIcon);
