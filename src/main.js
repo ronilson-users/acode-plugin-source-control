@@ -293,7 +293,7 @@ this.$sourceControlArea.appendChild($box);
 
  async destroy() {
   this.$containerControl.remove();
- }
+ 
 }
 
 if (window.acode) {
